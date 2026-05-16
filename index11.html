@@ -1,0 +1,830 @@
+  <!DOCTYPE html>
+  <html lang="fr">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le New Yorkais | Smash Burgers NYC Style</title>
+  <meta name="description" content="Le vrai smash burger new yorkais, livré chez vous. Commandez en ligne, payez à la
+  livraison.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em'
+   font-size='90'>🍔</text></svg>">
+
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --red: #E63946;
+      --red-dark: #C1121F;
+      --gold: #FFB703;
+      --gold-light: #FFD166;
+      --ink: #1D3557;
+      --cream: #F1FAEE;
+      --cream-dark: #E8E8E8;
+      --gray: #457B9D;
+      --shadow: 0 4px 20px rgba(0,0,0,0.15);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.2);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* ===== RESET ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--cream); color: var(--ink); line-height: 1.5; }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    img { max-width: 100%; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* ===== TYPOGRAPHY ===== */
+    .red { color: var(--red); }
+    .gold { color: var(--gold); }
+    .bold { font-weight: 700; }
+
+    /* ===== BUTTONS ===== */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 999px; font-weight:
+  700; font-size: 15px; transition: all 0.2s; }
+    .btn-primary { background: var(--red); color:white; box-shadow: 0 4px 15px rgba(230,57,70,0.4); }
+    .btn-primary:hover { background:var(--red-dark); transform:translateY(-2px); }
+    .btn-ghost { border: 2px solid var(--ink); color:var(--ink); }
+    .btn-ghost:hover { background:var(--ink); color:white; }
+
+    /* ===== TICKER ===== */
+    .ticker { background: var(--ink); color: white; overflow: hidden; padding: 10px 0; }
+    .ticker-track { display: flex; animation: ticker 20s linear infinite; white-space: nowrap; }
+    .ticker-track span { padding: 0 30px; font-weight: 600; font-size: 14px; letter-spacing: 1px; }
+    @keyframes ticker { from {transform:translateX(0);} to{transform:translateX(-50%);} }
+
+    /* ===== HEADER ===== */
+    header { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-mark { background: var(--red); color: white; width: 44px; height: 44px; border-radius: 10px; display: flex;
+  align-items: center; justify-content: center; font-weight: 900; font-size: 18px; }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .brand-text .le { font-size: 11px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+    .brand-text .name { font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 30px; }
+    .nav-links a { font-weight: 600; font-size: 15px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--red); }
+    .cart-btn { display: flex; align-items: center; gap: 8px; background: var(--ink); color: white; padding: 10px 20px;
+  border-radius: 999px; font-weight: 600; transition: all 0.2s; }
+    .cart-btn:hover { background: var(--red); transform: scale(1.05); }
+    .cart-count { background: var(--gold); color: var(--ink); width: 22px; height: 22px; border-radius: 50%; display:
+  flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; }
+
+    /* ===== HERO ===== */
+    .hero { padding: 60px 0; background: linear-gradient(135deg, #f8f9fa 0%, #fff 50%, #f0f0f0 100%); overflow: hidden;
+  }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .hero-eyebrow { display: inline-block; background: var(--gold); color: var(--ink); padding: 6px 16px; border-radius:
+   999px; font-size: 13px; font-weight: 700; margin-bottom: 20px; }
+    .hero-le { font-size: 18px; color: var(--gray); font-weight: 600; }
+    .hero-title { font-size: clamp(48px, 8vw, 80px); line-height: 0.95; margin: 15px 0 25px; letter-spacing: -2px; }
+    .hero-title .red { display: block; }
+    .hero-title .stroke { -webkit-text-stroke: 2px var(--ink); color: transparent; }
+    .hero-text { font-size: 18px; color: var(--gray); max-width: 480px; margin-bottom: 30px; }
+    .hero-cta { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 40px; }
+    .hero-stats { display: flex; gap: 40px; }
+    .stat .num { font-size: 28px; font-weight: 800; color: var(--red); }
+    .stat .lbl { font-size: 13px; color: var(--gray); font-weight: 600; }
+
+    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+    .hero-box { width: 320px; height: 320px; background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+  border-radius: 40px; position: relative; display: flex; align-items: center; justify-content: center; box-shadow:
+  var(--shadow-lg); }
+    .hero-box-stripes { position: absolute; inset: 20px; border: 4px dashed var(--gold); border-radius: 30px; opacity:
+  0.3; }
+    .hero-emoji { font-size: 140px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); animation: float 3s ease-in-out
+  infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
+    .hero-badge { position: absolute; background: white; padding: 12px 18px; border-radius: 16px; font-weight: 800;
+  font-size: 13px; box-shadow: var(--shadow); }
+    .hero-badge.b1 { top: 10px; right: -20px; transform: rotate(8deg); color: var(--red); }
+    .hero-badge.b2 { bottom: 30px; left: -30px; transform: rotate(-6deg); color: var(--ink); }
+
+    /* ===== MENU SECTION ===== */
+    .menu-section { padding: 80px 0; }
+    .section-header { text-align: center; margin-bottom: 50px; }
+    .section-eyebrow { font-size: 13px; color: var(--gray); font-weight: 600; letter-spacing: 2px; text-transform:
+  uppercase; margin-bottom: 10px; }
+    .section-title { font-size: 42px; font-weight: 800; letter-spacing: -1px; margin-bottom: 15px; }
+    .section-sub { font-size: 17px; color: var(--gray); max-width: 500px; margin: 0 auto; }
+
+    .categories { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; }
+    .cat-btn { padding: 12px 24px; border-radius: 999px; font-weight: 600; font-size: 14px; background: white; border:
+  2px solid #eee; transition: all 0.2s; }
+    .cat-btn:hover { border-color: var(--red); color: var(--red); }
+    .cat-btn.active { background: var(--red); border-color: var(--red); color: white; }
+
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+    .item { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  transition: all 0.3s; }
+    .item:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .item-img { height: 140px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); display: flex;
+  align-items: center; justify-content: center; position: relative; }
+    .item-num { position: absolute; top: 12px; left: 12px; background: var(--ink); color: white; font-size: 11px;
+  font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+    .item-tag { position: absolute; top: 12px; right: 12px; background: var(--gold); color: var(--ink); font-size: 10px;
+   font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
+    .emoji { font-size: 64px; }
+    .item-body { padding: 20px; }
+    .item-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .item-desc { font-size: 14px; color: var(--gray); margin-bottom: 16px; line-height: 1.4; }
+    .item-foot { display: flex; align-items: center; justify-content: space-between; }
+    .item-price { font-size: 22px; font-weight: 800; color: var(--red); }
+    .item-price small { font-size: 14px; font-weight: 600; color: var(--gray); }
+    .add-btn { width: 44px; height: 44px; background: var(--ink); color: white; border-radius: 12px; font-size: 24px;
+  font-weight: 700; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+    .add-btn:hover { background: var(--red); transform: scale(1.1); }
+    .add-btn.added { background: #2ecc71; }
+
+    /* ===== INFO STRIP ===== */
+    .info-strip { background: var(--ink); padding: 60px 0; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+    .info-card { text-align: center; color: white; }
+    .info-icon { font-size: 40px; margin-bottom: 15px; }
+    .info-card h3 { font-size: 18px; margin-bottom: 10px; }
+    .info-card p { font-size: 14px; opacity: 0.8; line-height: 1.5; }
+
+    /* ===== FOOTER ===== */
+    footer { background: #111; color: white; padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-grid h4 { font-size: 16px; margin-bottom: 20px; color: var(--gold); }
+    .footer-grid a { display: block; margin-bottom: 10px; opacity: 0.8; transition: opacity 0.2s; }
+    .footer-grid a:hover { opacity: 1; }
+    .footer-grid p { opacity: 0.8; margin-bottom: 10px; font-size: 14px; }
+    .footer-bottom { border-top: 1px solid #333; padding-top: 20px; display: flex; justify-content: space-between;
+  font-size: 13px; opacity: 0.6; }
+
+    /* ===== CART DRAWER ===== */
+    .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition:
+  all 0.3s; z-index: 200; }
+    .cart-overlay.open { opacity: 1; visibility: visible; }
+    .cart-drawer { position: fixed; top: 0; right: 0; width: 100%; max-width: 420px; height: 100%; background: white;
+  transform: translateX(100%); transition: transform 0.3s ease; z-index: 201; display: flex; flex-direction: column; }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-head { padding: 20px; border-bottom: 1px solid #eee; display: flex; align-items: center; justify-content:
+  space-between; }
+    .cart-head h2 { font-size: 20px; font-weight: 700; }
+    .close-btn { width: 36px; height: 36px; border-radius: 50%; background: #f5f5f5; font-size: 18px; }
+    .checkout-step { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+    .checkout-step.active { display: flex; }
+    .cart-body { flex: 1; overflow-y: auto; padding: 20px; }
+    .cart-empty { text-align: center; padding: 40px 20px; }
+    .cart-empty-emoji { font-size: 60px; margin-bottom: 20px; opacity: 0.5; }
+    .cart-empty p { color: var(--gray); }
+    .cart-item { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid #f5f5f5; }
+    .cart-item-img { width: 50px; height: 50px; background: #f8f9fa; border-radius: 10px; display: flex; align-items:
+  center; justify-content: center; font-size: 24px; }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-weight: 600; font-size: 15px; }
+    .cart-item-price { font-size: 14px; color: var(--gray); }
+    .qty { display: flex; align-items: center; gap: 10px; background: #f5f5f5; border-radius: 8px; padding: 4px; }
+    .qty button { width: 28px; height: 28px; border-radius: 6px; background: white; font-size: 16px; font-weight: 700; }
+    .qty span { min-width: 20px; text-align: center; font-weight: 600; }
+    .cart-foot { padding: 20px; border-top: 1px solid #eee; background: white; }
+    .cart-foot.hidden { display: none; }
+    .totals { margin-bottom: 20px; }
+    .totals-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 15px; }
+    .totals-row.total { font-size: 18px; font-weight: 700; border-top: 1px solid #eee; padding-top: 15px; margin-top:
+  10px; }
+    .checkout-btn { width: 100%; padding: 16px; background: var(--red); color: white; border-radius: 12px; font-size:
+  16px; font-weight: 700; transition: all 0.2s; }
+    .checkout-btn:hover { background: var(--red-dark); }
+
+    /* ===== CHECKOUT FORM ===== */
+    .back-link { display: inline-flex; align-items: center; gap: 5px; color: var(--gray); font-size: 14px;
+  margin-bottom: 20px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .form-group .req { color: var(--red); }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 16px; border: 2px solid
+  #eee; border-radius: 10px; font-size: 15px; transition: border-color 0.2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color:
+  var(--red); }
+    .form-group textarea { resize: none; }
+    .pay-options { display: flex; flex-direction: column; gap: 12px; }
+    .pay-opt { display: flex; align-items: center; gap: 15px; padding: 16px; border: 2px solid #eee; border-radius:
+  12px; cursor: pointer; transition: all 0.2s; }
+    .pay-opt.selected { border-color: var(--red); background: rgba(230,57,70,0.05); }
+    .pay-opt input { display: none; }
+    .pay-opt-icon { font-size: 24px; }
+    .pay-opt-text strong { display: block; font-size: 15px; }
+    .pay-opt-text span { font-size: 13px; color: var(--gray); }
+
+    /* ===== SUCCESS ===== */
+    .success-screen { text-align: center; padding: 40px 20px; }
+    .success-icon { width: 80px; height: 80px; background: #2ecc71; color: white; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-size: 40px; margin: 0 auto 25px; }
+    .success-screen h2 { font-size: 24px; margin-bottom: 15px; }
+    .success-screen p { color: var(--gray); margin-bottom: 30px; }
+
+    /* ===== TOAST ===== */
+    .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(100px); background:
+  var(--ink); color:var(--cream); padding: 12px 20px; border-radius: 999px; font-size: 14px; font-weight: 700; z-index:
+  200; transition: transform 0.3s; border: 2px solid var(--gold); }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-visual { order: -1; }
+      .hero-box { width: 240px; height: 240px; }
+      .hero-emoji { font-size: 100px; }
+      .hero-badge { display: none; }
+      .hero-cta { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title { font-size: 36px; }
+      .section-title { font-size: 32px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .cart-drawer { max-width: 100%; }
+    }
+  </style>
+  </head>
+  <body>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>🍔 SMASH BURGERS NYC STYLE</span>
+      <span>🚚 LIVRAISON 7J/7</span>
+      <span>💵 PAIEMENT À LA LIVRAISON</span>
+      <span>⭐ 100% HALAL</span>
+      <span>📞 COMMANDEZ AU 0555 12 34 56</span>
+      <span>🍔 SMASH BURGERS NYC STYLE</span>
+      <span>🚚 LIVRAISON 7J/7</span>
+      <span>💵 PAIEMENT À LA LIVRAISON</span>
+      <span>⭐ 100% HALAL</span>
+      <span>📞 COMMANDEZ AU 0555 12 34 56</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container nav">
+      <a href="#" class="brand">
+        <span class="brand-mark">NY</span>
+        <span class="brand-text">
+          <span class="le">Le</span>
+          <span class="name">NEW YORKAIS</span>
+        </span>
+      </a>
+      <nav class="nav-links">
+        <a href="#menu">Menu</a>
+        <a href="#info">Livraison</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="cart-btn" onclick="openCart()">
+        <span>🛒</span> <span>Panier</span>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="hero-eyebrow">🚚 Livraison en 30 min · Ouvert</span>
+        <span class="hero-le">Le vrai</span>
+        <h1 class="hero-title">
+          <span class="red">Smash</span><br>
+          <span class="stroke">Burger</span><br>
+          New Yorkais
+        </h1>
+        <p class="hero-text">
+          Boxes garnies, smash burgers grillés, pasta crémeuses. Le goût de New York,
+          livré à votre porte. Commandez en ligne, payez à la livraison.
+        </p>
+        <div class="hero-cta">
+          <a href="#menu" class="btn btn-primary">Voir le menu →</a>
+          <a href="tel:0555123456" class="btn btn-ghost">📞 Appeler</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="num">30min</div><div class="lbl">Livraison</div></div>
+          <div class="stat"><div class="num">100%</div><div class="lbl">Halal</div></div>
+          <div class="stat"><div class="num">4.9★</div><div class="lbl">Note clients</div></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-box">
+          <div class="hero-box-stripes"></div>
+          <div class="hero-emoji">🍔</div>
+        </div>
+        <div class="hero-badge b1">SMASH<br>NYC<br>STYLE</div>
+        <div class="hero-badge b2">100%<br>HALAL</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Notre carte</div>
+        <h2 class="section-title">Le <span class="red">Menu</span></h2>
+        <p class="section-sub">Tout est préparé à la commande, viande fraîche, fromage qui dégouline. Smash style.</p>
+      </div>
+
+      <div class="categories" id="categories"></div>
+      <div class="menu-grid" id="menuGrid"></div>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section class="info-strip" id="info">
+    <div class="container info-grid">
+      <div class="info-card">
+        <div class="info-icon">🛵</div>
+        <h3>Livraison rapide</h3>
+        <p>Livré en 30 minutes dans toute la wilaya. Frais de livraison à partir de 100 DA.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">💵</div>
+        <h3>Paiement livraison</h3>
+        <p>Payez en espèces au livreur. Pas de surprise, pas de frais cachés.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">⏰</div>
+        <h3>Ouvert 7j/7</h3>
+        <p>Tous les jours de 11h à 23h. Vendredi à partir de 14h après la prière.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📱</div>
+        <h3>Commande WhatsApp</h3>
+        <p>Confirmation instantanée par WhatsApp. Suivi de commande en temps réel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#" class="brand" style="margin-bottom: 18px;">
+            <span class="brand-mark">NY</span>
+            <span class="brand-text">
+              <span class="le">Le</span>
+              <span class="name">NEW YORKAIS</span>
+            </span>
+          </a>
+          <p>Le smash burger authentique, livré chez vous. Préparé avec passion, servi avec le sourire.</p>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <a href="tel:0555123456">📞 0555 12 34 56</a>
+          <a href="https://wa.me/213555123456" target="_blank">💬 WhatsApp</a>
+          <a href="https://instagram.com/le.new.yorkais" target="_blank">📸 @le.new.yorkais</a>
+        </div>
+        <div>
+          <h4>Horaires</h4>
+          <p>Lun – Jeu : 11h – 23h</p>
+          <p>Ven : 14h – 23h</p>
+          <p>Sam – Dim : 11h – 00h</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Le New Yorkais · Tous droits réservés</span>
+        <span>Made with ❤️ in Algeria</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+      <h2 id="cartTitle">Votre panier</h2>
+      <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+
+    <!-- STEP 1: CART -->
+    <div class="checkout-step active" id="step-cart">
+      <div class="cart-body" id="cartBody"></div>
+      <div class="cart-foot hidden" id="cartFoot">
+        <div class="totals">
+          <div class="totals-row"><span>Sous-total</span><span id="subtotal">0 DA</span></div>
+          <div class="totals-row"><span>Livraison</span><span id="delivery">100 DA</span></div>
+          <div class="totals-row total"><span>Total</span><span id="total">0 DA</span></div>
+        </div>
+        <button class="checkout-btn" onclick="goToCheckout()">Commander →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: CHECKOUT FORM -->
+    <div class="checkout-step" id="step-form">
+      <div class="cart-body">
+        <button class="back-link" onclick="goToStep('cart')">← Retour au panier</button>
+        <form id="checkoutForm" onsubmit="submitOrder(event)">
+          <div class="form-group">
+            <label>Nom complet <span class="req">*</span></label>
+            <input type="text" name="name" required placeholder="Mohamed Amine">
+          </div>
+          <div class="form-group">
+            <label>Téléphone <span class="req">*</span></label>
+            <input type="tel" name="phone" required placeholder="0555 12 34 56" pattern="[0-9 ]{10,}">
+          </div>
+          <div class="form-group">
+            <label>Wilaya <span class="req">*</span></label>
+            <select name="wilaya" id="wilayaSelect" required onchange="updateCommunes()">
+              <option value="">Choisir une wilaya...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Commune <span class="req">*</span></label>
+            <select name="commune" id="communeSelect" required disabled>
+              <option value="">Choisissez d'abord une wilaya...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Adresse précise <span class="req">*</span></label>
+            <textarea name="address" rows="2" required placeholder="N°, rue, immeuble, étage..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Notes (facultatif)</label>
+            <textarea name="notes" rows="2" placeholder="Sans oignon, bien cuit, etc."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Mode de paiement <span class="req">*</span></label>
+            <div class="pay-options">
+              <label class="pay-opt selected">
+                <input type="radio" name="payment" value="cash" checked>
+                <div class="pay-opt-icon">💵</div>
+                <div class="pay-opt-text">
+                  <strong>À la livraison</strong>
+                  <span>Espèces au livreur</span>
+                </div>
+              </label>
+              <label class="pay-opt">
+                <input type="radio" name="payment" value="cib">
+                <div class="pay-opt-icon">💳</div>
+                <div class="pay-opt-text">
+                  <strong>Carte CIB / Edahabia</strong>
+                  <span>Bientôt disponible</span>
+                </div>
+              </label>
+            </div>
+          </div>
+          <button type="submit" class="checkout-btn">Confirmer la commande</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- STEP 3: SUCCESS -->
+    <div class="checkout-step" id="step-success">
+      <div class="cart-body">
+        <div class="success-screen">
+          <div class="success-icon">✓</div>
+          <h2>C'est parti !</h2>
+          <p>Votre commande est bien enregistrée. Nous vous appellons dans quelques minutes pour confirmer.</p>
+          <button class="checkout-btn" onclick="resetOrder()">Nouvelle commande</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: SUCCESS -->
+    <div class="checkout-step" id="step-success">
+      <div class="cart-body">
+        <div class="success-screen">
+          <div class="success-icon">✓</div>
+          <h2>C'est parti !</h2>
+          <p>Votre commande est bien enregistrée. Nous vous appellons dans quelques minutes pour confirmer.</p>
+          <button class="checkout-btn" onclick="resetOrder()">Nouvelle commande</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ====== CONFIGURATION ======
+    const CONFIG = {
+      restaurantName: "Le New Yorkais",
+      deliveryFee: 100,
+      minOrder: 500,
+      currency: "DA"
+    };
+
+    // ====== WILAYAS & COMMUNES D'ALGÉRIE ======
+    const WILAYAS_COMMUNES = {
+      "Alger (16)": [
+        "Alger Centre", "Sidi M'Hamed", "El Madania", "Hamma El Annasser", "Bab El Oued",
+        "Bologhine", "Casbah", "Oued Koriche", "Bir Mourad Raïs", "El Biar",
+        "Bouzaréah", "Birkhadem", "El Harrach", "Baraki", "Oued Smar",
+        "Bourouba", "Hussein Dey", "Kouba", "Bachdjerrah", "Dar El Beïda
+
+● Le code complet est déjà dans ma réponse précédente. Voici une version optimisée et concise que vous pouvez copier-coller directement :
+
+  <!DOCTYPE html>
+  <html lang="fr">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le New Yorkais | Smash Burgers NYC Style</title>
+  <link rel="icon"href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='.9em' font-size='90'>🍔</text></svg>">
+  <style>
+  :root{--red:#E63946;--gold:#FFB703;--ink:#1D3557;--cream:#F1FAEE;--gray:#457B9D;}
+  *{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,sans-serif;background:var(--cream);color:var(--ink)}
+  .container{max-width:1200px;margin:0 auto;padding:0 20px}
+  .btn{display:inline-flex;padding:14px 28px;border-radius:99px;font-weight:700;transition:.2s}
+  .btn-primary{background:var(--red);color:#fff;box-shadow:0 4px 15px rgba(230,57,70,.4)}
+  .btn-ghost{border:2px solid var(--ink);color:var(--ink)}
+  .ticker{background:var(--ink);color:#fff;overflow:hidden;padding:10px 0}
+  .ticker-track{display:flex;animation:tick 20s linear infinite}
+  .ticker-track span{padding:0 30px;font-weight:600;font-size:14px;white-space:nowrap}
+  @keyframes tick{to{transform:translateX(-50%)}}
+  header{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand-mark{background:var(--red);color:#fff;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:
+  900;font-size:18px}
+  .brand-text{display:flex;flex-direction:column;line-height:1.1}
+  .brand-text .le{font-size:11px;color:var(--gray);text-transform:uppercase}
+  .brand-text .name{font-weight:800;font-size:18px}
+  .nav-links{display:flex;gap:30px}
+  .nav-links a{font-weight:600;font-size:15px}
+  .cart-btn{display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:10px 20px;border-radius:99px;font-weight:600}
+  .cart-count{background:var(--gold);color:var(--ink);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-s
+  ize:12px;font-weight:800}
+  .hero{padding:60px 0;background:linear-gradient(135deg,#f8f9fa,#fff)}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .hero-eyebrow{display:inline-block;background:var(--gold);color:var(--ink);padding:6px
+  16px;border-radius:99px;font-size:13px;font-weight:700;margin-bottom:20px}
+  .hero-title{font-size:clamp(40px,8vw,72px);line-height:.95;margin:15px 0 25px;letter-spacing:-2px}
+  .hero-title .stroke{-webkit-text-stroke:2px var(--ink);color:transparent}
+  .hero-text{font-size:18px;color:var(--gray);max-width:480px;margin-bottom:30px}
+  .hero-cta{display:flex;gap:15px;margin-bottom:40px}
+  .hero-stats{display:flex;gap:40px}
+  .stat .num{font-size:28px;font-weight:800;color:var(--red)}
+  .stat .lbl{font-size:13px;color:var(--gray)}
+  .hero-visual{position:relative;display:flex;justify-content:center}
+  .hero-box{width:280px;height:280px;background:linear-gradient(145deg,#2a2a2a,#1a1a1a);border-radius:40px;display:flex;align-items:center;justify-content:c
+  enter;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+  .hero-emoji{font-size:120px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.3));animation:float 3s ease-in-out infinite}
+  @keyframes float{50%{transform:translateY(-15px)}}
+  .hero-badge{position:absolute;background:#fff;padding:12px 18px;border-radius:16px;font-weight:800;font-size:13px;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+  .hero-badge.b1{top:10px;right:-20px;transform:rotate(8deg);color:var(--red)}
+  .hero-badge.b2{bottom:30px;left:-30px;transform:rotate(-6deg)}
+  .menu-section{padding:80px 0}
+  .section-header{text-align:center;margin-bottom:50px}
+  .section-eyebrow{font-size:13px;color:var(--gray);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+  .section-title{font-size:42px;font-weight:800;letter-spacing:-1px;margin-bottom:15px}
+  .section-sub{font-size:17px;color:var(--gray);max-width:500px;margin:0 auto}
+  .categories{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+  .cat-btn{padding:12px 24px;border-radius:99px;font-weight:600;font-size:14px;background:#fff;border:2px solid #eee;transition:.2s}
+  .cat-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+  .item{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.04);transition:.3s}
+  .item:hover{transform:translateY(-5px);box-shadow:0 4px 20px rgba(0,0,0,.1)}
+  .item-img{height:140px;background:linear-gradient(135deg,#f8f9fa,#e9ecef);display:flex;align-items:center;justify-content:center;position:relative}
+  .item-num{position:absolute;top:12px;left:12px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px}
+  .item-tag{position:absolute;top:12px;right:12px;background:var(--gold);color:var(--ink);font-size:10px;font-weight:800;padding:4px
+  10px;border-radius:6px;text-transform:uppercase}
+  .emoji{font-size:64px}
+  .item-body{padding:20px}
+  .item-name{font-size:18px;font-weight:700;margin-bottom:8px}
+  .item-desc{font-size:14px;color:var(--gray);margin-bottom:16px}
+  .item-foot{display:flex;align-items:center;justify-content:space-between}
+  .item-price{font-size:22px;font-weight:800;color:var(--red)}
+  .add-btn{width:44px;height:44px;background:var(--ink);color:#fff;border-radius:12px;font-size:24px;font-weight:700;transition:.2s}
+  .add-btn:hover{background:var(--red);transform:scale(1.1)}
+  .add-btn.added{background:#2ecc71}
+  .info-strip{background:var(--ink);padding:60px 0}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px}
+  .info-card{text-align:center;color:#fff}
+  .info-icon{font-size:40px;margin-bottom:15px}
+  .info-card h3{font-size:18px;margin-bottom:10px}
+  .info-card p{font-size:14px;opacity:.8}
+  footer{background:#111;color:#fff;padding:60px 0 30px}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:40px}
+  .footer-grid h4{font-size:16px;margin-bottom:20px;color:var(--gold)}
+  .footer-grid a{display:block;margin-bottom:10px;opacity:.8}
+  .footer-bottom{border-top:1px solid #333;padding-top:20px;display:flex;justify-content:space-between;font-size:13px;opacity:.6}
+  .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:.3s;z-index:200}
+  .cart-overlay.open{opacity:1;visibility:visible}
+  .cart-drawer{position:fixed;top:0;right:0;width:100%;max-width:420px;height:100%;background:#fff;transform:translateX(100%);transition:transform
+  .3s;z-index:201;display:flex;flex-direction:column}
+  .cart-drawer.open{transform:translateX(0)}
+  .cart-head{padding:20px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between}
+  .cart-head h2{font-size:20px;font-weight:700}
+  .close-btn{width:36px;height:36px;border-radius:50%;background:#f5f5f5;font-size:18px}
+  .checkout-step{display:none;flex-direction:column;flex:1;overflow:hidden}
+  .checkout-step.active{display:flex}
+  .cart-body{flex:1;overflow-y:auto;padding:20px}
+  .cart-empty{text-align:center;padding:40px 20px}
+  .cart-empty-emoji{font-size:60px;margin-bottom:20px;opacity:.5}
+  .cart-item{display:flex;align-items:center;gap:15px;padding:15px 0;border-bottom:1px solid #f5f5f5}
+  .cart-item-img{width:50px;height:50px;background:#f8f9fa;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px}
+  .cart-item-info{flex:1}
+  .cart-item-name{font-weight:600;font-size:15px}
+  .cart-item-price{font-size:14px;color:var(--gray)}
+  .qty{display:flex;align-items:center;gap:10px;background:#f5f5f5;border-radius:8px;padding:4px}
+  .qty button{width:28px;height:28px;border-radius:6px;background:#fff;font-size:16px;font-weight:700}
+  .qty span{min-width:20px;text-align:center;font-weight:600}
+  .cart-foot{padding:20px;border-top:1px solid #eee;background:#fff}
+  .cart-foot.hidden{display:none}
+  .totals{margin-bottom:20px}
+  .totals-row{display:flex;justify-content:space-between;margin-bottom:10px;font-size:15px}
+  .totals-row.total{font-size:18px;font-weight:700;border-top:1px solid #eee;padding-top:15px;margin-top:10px}
+  .checkout-btn{width:100%;padding:16px;background:var(--red);color:#fff;border-radius:12px;font-size:16px;font-weight:700}
+  .back-link{display:inline-flex;align-items:center;gap:5px;color:var(--gray);font-size:14px;margin-bottom:20px}
+  .form-group{margin-bottom:20px}
+  .form-group label{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
+  .form-group .req{color:var(--red)}
+  .form-group input,.form-group select,.form-group textarea{width:100%;padding:14px 16px;border:2px solid #eee;border-radius:10px;font-size:15px}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--red)}
+  .form-group textarea{resize:none}
+  .pay-options{display:flex;flex-direction:column;gap:12px}
+  .pay-opt{display:flex;align-items:center;gap:15px;padding:16px;border:2px solid #eee;border-radius:12px;cursor:pointer;transition:.2s}
+  .pay-opt.selected{border-color:var(--red);background:rgba(230,57,70,.05)}
+  .pay-opt input{display:none}
+  .pay-opt-icon{font-size:24px}
+  .pay-opt-text strong{display:block;font-size:15px}
+  .pay-opt-text span{font-size:13px;color:var(--gray)}
+  .success-screen{text-align:center;padding:40px 20px}
+  .success-icon{width:80px;height:80px;background:#2ecc71;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px
+  ;margin:0 auto 25px}
+  .success-screen h2{font-size:24px;margin-bottom:15px}
+  .success-screen p{color:var(--gray);margin-bottom:30px}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:var(--cream);padding:12px
+  20px;border-radius:99px;font-size:14px;font-weight:700;z-index:200;transition:transform .3s;border:2px solid var(--gold)}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;text-align:center}.hero-visual{order:-1}.hero-box{width:220px;height:220px}.hero-emoji{font-s
+  ize:90px}.hero-badge{display:none}.hero-cta{justify-content:center}.hero-stats{justify-content:center}.nav-links{display:none}.footer-grid{grid-template-c
+  olumns:1fr;text-align:center}}
+  </style>
+  </head>
+  <body>
+  <div class="ticker"><div class="ticker-track"><span>🍔 SMASH BURGERS NYC STYLE</span><span>🚚 LIVRAISON 7J/7</span><span>💵 PAIEMENT À LA
+  LIVRAISON</span><span>⭐ 100% HALAL</span><span>📞 0555 12 34 56</span><span>🍔 SMASH BURGERS NYC STYLE</span><span>🚚 LIVRAISON 7J/7</span><span>💵
+  PAIEMENT À LA LIVRAISON</span><span>⭐ 100% HALAL</span><span>📞 0555 12 34 56</span></div></div>
+  <header><div class="container nav"><a href="#" class="brand"><span class="brand-mark">NY</span><span class="brand-text"><span class="le">Le</span><span
+  class="name">NEW YORKAIS</span></span></a><nav class="nav-links"><a href="#menu">Menu</a><a href="#info">Livraison</a><a
+  href="#contact">Contact</a></nav><button class="cart-btn" onclick="openCart()"><span>🛒</span> Panier<span class="cart-count"
+  id="cartCount">0</span></button></div></header>
+  <section class="hero"><div class="container hero-grid"><div><span class="hero-eyebrow">🚚 Livraison 30min · Ouvert</span><span class="hero-le">Le
+  vrai</span><h1 class="hero-title"><span class="red">Smash</span><br><span class="stroke">Burger</span><br>New Yorkais</h1><p class="hero-text">Boxes
+  garnies, smash burgers grillés, pasta crémeuses. Le goût de New York, livré à votre porte.</p><div class="hero-cta"><a href="#menu" class="btn
+  btn-primary">Voir le menu →</a><a href="tel:0555123456" class="btn btn-ghost">📞 Appeler</a></div><div class="hero-stats"><div class="stat"><div
+  class="num">30min</div><div class="lbl">Livraison</div></div><div class="stat"><div class="num">100%</div><div class="lbl">Halal</div></div><div
+  class="stat"><div class="num">4.9★</div><div class="lbl">Note</div></div></div></div><div class="hero-visual"><div class="hero-box"><div
+  class="hero-emoji">🍔</div></div><div class="hero-badge b1">SMASH<br>NYC<br>STYLE</div><div class="hero-badge
+  b2">100%<br>HALAL</div></div></div></section>
+  <section class="menu-section" id="menu"><div class="container"><div class="section-header"><div class="section-eyebrow">Notre carte</div><h2
+  class="section-title">Le <span class="red">Menu</span></h2><p class="section-sub">Tout est préparé à la commande, viande fraîche, fromage qui
+  dégouline.</p></div><div class="categories" id="categories"></div><div class="menu-grid" id="menuGrid"></div></div></section>
+  <section class="info-strip" id="info"><div class="container info-grid"><div class="info-card"><div class="info-icon">🛵</div><h3>Livraison
+  rapide</h3><p>Livré en 30 min. Frais de livraison à partir de 100 DA.</p></div><div class="info-card"><div class="info-icon">💵</div><h3>Paiement
+  livraison</h3><p>Payez en espèces au livreur.</p></div><div class="info-card"><div class="info-icon">⏰</div><h3>Ouvert 7j/7</h3><p>11h-23h. Ven dès
+  14h.</p></div><div class="info-card"><div class="info-icon">📱</div><h3>WhatsApp</h3><p>Confirmation instantanée.</p></div></div></section>
+  <footer id="contact"><div class="container"><div class="footer-grid"><div><a href="#" class="brand" style="margin-bottom:18px"><span
+  class="brand-mark">NY</span><span class="brand-text"><span class="le">Le</span><span class="name">NEW YORKAIS</span></span></a><p>Le smash burger
+  authentique, livré chez vous.</p></div><div><h4>Contact</h4><a href="tel:0555123456">📞 0555 12 34 56</a><a href="https://wa.me/213555123456"
+  target="_blank">💬 WhatsApp</a><a href="https://instagram.com/le.new.yorkais" target="_blank">📸 @le.new.yorkais</a></div><div><h4>Horaires</h4><p>Lun –
+  Jeu : 11h – 23h</p><p>Ven : 14h – 23h</p><p>Sam – Dim : 11h – 00h</p></div></div><div class="footer-bottom"><span>© 2026 Le New Yorkais</span><span>Made
+  with ❤️ in Algeria</span></div></div></footer>
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer"><div class="cart-head"><h2 id="cartTitle">Votre panier</h2><button class="close-btn"
+  onclick="closeCart()">✕</button></div>
+  <div class="checkout-step active" id="step-cart"><div class="cart-body" id="cartBody"></div><div class="cart-foot hidden" id="cartFoot"><div
+  class="totals"><div class="totals-row"><span>Sous-total</span><span id="subtotal">0 DA</span></div><div class="totals-row"><span>Livraison</span><span
+  id="delivery">100 DA</span></div><div class="totals-row total"><span>Total</span><span id="total">0 DA</span></div></div><button class="checkout-btn"
+  onclick="goToCheckout()">Commander →</button></div></div>
+  <div class="checkout-step" id="step-form"><div class="cart-body"><button class="back-link" onclick="goToStep('cart')">← Retour</button><form
+  id="checkoutForm" onsubmit="submitOrder(event)"><div class="form-group"><label>Nom complet <span class="req">*</span></label><input type="text"
+  name="name" required placeholder="Mohamed Amine"></div><div class="form-group"><label>Téléphone <span class="req">*</span></label><input type="tel"
+  name="phone" required placeholder="0555 12 34 56"></div><div class="form-group"><label>Wilaya <span class="req">*</span></label><select name="wilaya"
+  id="wilayaSelect" required onchange="updateCommunes()"><option value="">Choisir...</option></select></div><div class="form-group"><label>Commune <span
+  class="req">*</span></label><select name="commune" id="communeSelect" required disabled><option>Sélectionnez une wilaya...</option></select></div><div
+  class="form-group"><label>Adresse <span class="req">*</span></label><textarea name="address" rows="2" required placeholder="N°, rue,
+  immeuble..."></textarea></div><div class="form-group"><label>Notes</label><textarea name="notes" rows="2" placeholder="Sans oignon, bien
+  cuit..."></textarea></div><div class="form-group"><label>Paiement <span class="req">*</span></label><div class="pay-options"><label class="pay-opt
+  selected"><input type="radio" name="payment" value="cash" checked><div class="pay-opt-icon">💵</div><div class="pay-opt-text"><strong>À la
+  livraison</strong><span>Espèces</span></div></label><label class="pay-opt"><input type="radio" name="payment" value="cib" disabled><div
+  class="pay-opt-icon">💳</div><div class="pay-opt-text"><strong>Carte CIB</strong><span>Bientôt</span></div></label></div></div><button type="submit"
+  class="checkout-btn">Confirmer</button></form></div></div>
+  <div class="checkout-step" id="step-success"><div class="cart-body"><div class="success-screen"><div class="success-icon">✓</div><h2>C'est parti
+  !</h2><p>Commande enregistrée. Nous vous appelons pour confirmer.</p><button class="checkout-btn" onclick="resetOrder()">Nouvelle
+  commande</button></div></div></div></aside>
+  <div class="toast" id="toast"></div>
+  <script>
+  const CONFIG={restaurantName:"Le New Yorkais",deliveryFee:100,minOrder:500,currency:"DA"};
+  const WILAYAS={"Alger (16)":["Alger Centre","Sidi M'Hamed","El Madania","Hamma El Annasser","Bab El Oued","Bologhine","Casbah","Oued Koriche","Bir Mourad
+  Raïs","El Biar","Bouzaréah","Birkhadem","El Harrach","Baraki","Oued Smar","Bourouba","Hussein Dey","Kouba","Bachdjerrah","Dar El Beïda","Bab Ezzouar","Ben
+   Aknoun","Dely Ibrahim","El Hammamet","Raïs Hamidou","Djasr Kasentina","El Mouradia","Hydra","Mohammadia","Bordj El Kiffan","El Magharia","Beni
+  Messous","Les Eucalyptus","Birtouta","Tessala El Merdja","Ouled Chebel","Sidi Moussa","Aïn Taya","Bordj El Bahri","El
+  Marsa","Haraoua","Rouïba","Reghaïa","Aïn Benian","Staouéli","Zéralda","Mahelma","Rahmania","Souidania","Cheraga","Ouled Fayet","El
+  Achour","Draria","Douera","Baba Hassen","Khraïssia","Saoula"],"Blida (09)":["Blida","Boufarik","Bouinan","Soumaa","Beni Mered","Ouled
+  Yaïch","Chebli","Larbaa","Bougara","Mouzaia","El Affroun","Oued El Alleug"],"Boumerdès (35)":["Boumerdès","Boudouaou","Réghaïa","Khemis El
+  Khechna","Thénia","Dellys","Bordj Menaïel","Naciria","Si Mustapha","Beni Amrane"],"Tipaza (42)":["Tipaza","Cherchell","Hadjout","Koléa","Bou
+  Ismaïl","Fouka","Douaouda","Ahmer El Aïn","Damous","Gouraya"],"Oran (31)":["Oran","Bir El Djir","Es Senia","Arzew","Bethioua","Aïn El Türck","Mers El
+  Kébir","Gdyel","Hassi Bounif","Sidi Chahmi"],"Constantine (25)":["Constantine","Hamma Bouziane","Didouche Mourad","El Khroub","Aïn Smara","Zighoud
+  Youcef","Ibn Ziad","Aïn Abid"],"Annaba (23)":["Annaba","El Bouni","El Hadjar","Sidi Amar","Berrahal","Aïn Berda"],"Sétif (19)":["Sétif","El Eulma","Aïn
+  Oulmène","Aïn Arnat","Bougaâ","Aïn Azel"],"Batna (05)":["Batna","Tazoult","Aïn Touta","Barika","Arris","Merouana","N'Gaous"],"Tizi Ouzou (15)":["Tizi
+  Ouzou","Azazga","Draâ Ben Khedda","Tigzirt","Larbaâ Nath Irathen","Boghni","Ouadhias","Aïn El Hammam"],"Béjaïa (06)":["Béjaïa","Akbou","El Kseur","Sidi
+  Aïch","Tichy","Souk El Tenine","Aokas","Amizour"],"M'Sila (28)":["M'Sila","Bou Saâda","Sidi Aïssa","Aïn El Melh","Magra","Hammam Dhalaa"]};
+  const MENU=[{id:1,cat:"Smash Burgers",name:"Smash L",desc:"Steak smashé, cheddar fondu, salade, sauce maison",price:650,emoji:"🍔"},{id:2,cat:"Smash
+  Burgers",name:"Smash XL",desc:"Double steak smashé, double cheddar, oignon caramélisé",price:850,emoji:"🍔"},{id:3,cat:"Smash Burgers",name:"Smash
+  XXL",desc:"Triple steak smashé, triple cheddar, sauce signature",price:950,emoji:"🍔",tag:"XXL"},{id:4,cat:"Smash Burgers",name:"Smash Crispy",desc:"Steak
+   smashé, poulet croustillant, double sauce",price:650,emoji:"🍔"},{id:5,cat:"Smash Burgers",name:"Smash Camembert Miel",desc:"Steak smashé, camembert
+  fondant, miel doré, roquette",price:850,emoji:"🍔"},{id:6,cat:"Smash Burgers",name:"Smash Mushroom",desc:"Steak smashé, champignons sautés, fromage
+  suisse",price:850,emoji:"🍔"},{id:7,cat:"Smash Burgers",name:"Smash Bacon",desc:"Steak smashé, bacon de bœuf croustillant, cheddar,
+  BBQ",price:850,emoji:"🍔"},{id:8,cat:"Smash Burgers",name:"Smash Truffe",desc:"Steak smashé, parmesan, sauce truffe noire,
+  roquette",price:950,emoji:"🍔",tag:"Premium"},{id:9,cat:"Smash Burgers",name:"Smash Egg",desc:"Steak smashé, œuf au plat, cheddar, sauce
+  maison",price:750,emoji:"🍔"},{id:10,cat:"Smash Burgers",name:"Smash Avocado",desc:"Steak smashé, avocat frais, cheddar, sauce
+  verte",price:950,emoji:"🍔"},{id:11,cat:"Smash Burgers",name:"Smash Bleu",desc:"Steak smashé, bleu fondu, oignon caramélisé,
+  salade",price:850,emoji:"🍔"},{id:12,cat:"Smash Burgers",name:"Smash Pastrami",desc:"Steak smashé, pastrami fumé, cheddar,
+  moutarde",price:1100,emoji:"🍔",tag:"Top"},{id:20,cat:"Boxes",name:"BBQ Box",desc:"Smash burger + tenders + frites +
+  sauces",price:1200,emoji:"🍱"},{id:21,cat:"Boxes",name:"Pink Lady",desc:"Box premium : burger signature, tenders, sauce
+  rosée",price:1200,emoji:"🍱"},{id:22,cat:"Boxes",name:"India Box",desc:"Box épicée : burger curry, tenders épicés, frites
+  masala",price:1300,emoji:"🍱"},{id:23,cat:"Boxes",name:"Cheesy Bacon",desc:"Box ultra fromage : burger bacon, tenders, fries
+  cheesy",price:1500,emoji:"🍱",tag:"Best"},{id:24,cat:"Boxes",name:"Tuflato Box",desc:"Box truffe : burger truffé, tenders, frites
+  parmesan",price:1800,emoji:"🍱",tag:"Premium"},{id:25,cat:"Boxes",name:"Crispy Box",desc:"Tout croustillant : crispy burger, tenders,
+  fries",price:1800,emoji:"🍱"},{id:30,cat:"Smash Boxes",name:"Box 1 SMASH + 4 tenders",desc:"1 smash + 4 tenders + frites +
+  boisson",price:1800,emoji:"📦"},{id:31,cat:"Smash Boxes",name:"Box 2 SMASH + 6 tenders",desc:"2 smash + 6 tenders + frites
+  XL",price:2500,emoji:"📦"},{id:32,cat:"Smash Boxes",name:"Box 3 SMASH + 9 tenders",desc:"3 smash + 9 tenders + frites +
+  sauces",price:3300,emoji:"📦"},{id:33,cat:"Smash Boxes",name:"Family 4 SMASH + 12 tenders",desc:"Box familiale : 4 smash + 12 tenders + frites
+  XXL",price:3800,emoji:"👨‍👩‍👧‍👦",tag:"Family"},{id:40,cat:"Sandwichs",name:"Cheesy Chicken",desc:"Pain brioché, poulet grillé, double
+  cheddar",price:650,emoji:"🥪"},{id:41,cat:"Sandwichs",name:"Cheesy Beef",desc:"Pain brioché, viande effilochée, double cheddar,
+  BBQ",price:750,emoji:"🥪"},{id:42,cat:"Sandwichs",name:"Crispy",desc:"Filet de poulet croustillant, salade, sauce
+  signature",price:750,emoji:"🥪"},{id:43,cat:"Sandwichs",name:"Le Mix",desc:"Bœuf + poulet, double fromage, sauces
+  mélangées",price:950,emoji:"🥪"},{id:50,cat:"Pasta",name:"Pasta Fromagère",desc:"Pâtes, sauce 4 fromages crémeuse,
+  parmesan",price:650,emoji:"🍝"},{id:51,cat:"Pasta",name:"Pasta Poulet",desc:"Pâtes, poulet grillé, sauce
+  crémeuse",price:950,emoji:"🍝"},{id:52,cat:"Pasta",name:"Pasta Poulet Champignons",desc:"Pâtes, poulet, champignons frais, sauce
+  crème",price:1250,emoji:"🍝"},{id:53,cat:"Pasta",name:"Pasta Poulet Fumé",desc:"Pâtes, poulet fumé, sauce crémeuse,
+  parmesan",price:950,emoji:"🍝"},{id:54,cat:"Pasta",name:"Pasta Truffato",desc:"Pâtes, sauce truffe noire, parmesan, jambon de
+  pays",price:1500,emoji:"🍝",tag:"Premium"},{id:60,cat:"Sides",name:"Tenders",desc:"5 tenders de poulet croustillants, sauce au
+  choix",price:750,emoji:"🍗"},{id:61,cat:"Sides",name:"Fries Cheesy",desc:"Frites maison + cheddar
+  fondu",price:450,emoji:"🍟"},{id:62,cat:"Sides",name:"Fries Cheesy Nuggets",desc:"Frites + cheddar + nuggets
+  dorés",price:850,emoji:"🍟"},{id:63,cat:"Sides",name:"Fries Cheesy Beef",desc:"Frites + cheddar + viande
+  effilochée",price:850,emoji:"🍟"},{id:64,cat:"Sides",name:"Mac & Cheese Nuggets",desc:"Mac & cheese gratiné + nuggets
+  croustillants",price:1250,emoji:"🧀"},{id:70,cat:"Boissons",name:"Jus frais",desc:"Jus de fruits frais pressé du
+  jour",price:300,emoji:"🥤"},{id:71,cat:"Boissons",name:"Coca-Cola",desc:"33cl, servi bien frais",price:100,emoji:"🥤"},{id:72,cat:"Boissons",name:"Hamoud
+  Boualem",desc:"Selecto, citron ou orange · 33cl",price:100,emoji:"🥤"},{id:73,cat:"Boissons",name:"Eau minérale 50cl",desc:"Ifri /
+  Saïda",price:50,emoji:"💧"}];
+  let cart=[],activeCategory="Tous";
+  function renderCategories(){const cats=["Tous",...new Set(MENU.map(m=>m.cat))];document.getElementById("categories").innerHTML=cats.map(cat=>`<button
+  class="cat-btn ${cat===activeCategory?'active':''}" onclick="setCategory('${cat}')">${cat}</button>`).join("")}
+  function setCategory(cat){activeCategory=cat;renderCategories();renderMenu();document.getElementById('menu').scrollIntoView({behavior:'smooth'})}
+  function renderMenu(){const items=activeCategory
+
+● Voici le script JS manquant à ajouter à la fin du fichier (avant </script>) :
+
+  function renderMenu(){const
+  items=activeCategory==="Tous"?MENU:MENU.filter(m=>m.cat===activeCategory);document.getElementById("menuGrid").innerHTML=items.map(item=>`<div
+  class="item"><div class="item-img"><span class="item-num">N°${String(item.id).padStart(2,'0')}</span>${item.tag?`<span
+  class="item-tag">${item.tag}</span>`:''}<div class="emoji">${item.emoji}</div></div><div class="item-body"><h3 class="item-name">${item.name}</h3><p
+  class="item-desc">${item.desc}</p><div class="item-foot"><div class="item-price">${item.price} <small>DA</small></div><button class="add-btn"
+  onclick="addToCart(${item.id},this)">+</button></div></div></div>`).join("")}
+  function addToCart(id,btn){const item=MENU.find(m=>m.id===id);const existing=cart.find(c=>c.id===id);if(existing)existing.qty++;else
+  cart.push({...item,qty:1});updateCart();showToast(`${item.name} ajouté
+  ✓`);if(btn){btn.classList.add("added");btn.innerHTML="✓";setTimeout(()=>{btn.classList.remove("added");btn.innerHTML="+"},800)}}
+  function changeQty(id,delta){const
+  item=cart.find(c=>c.id===id);if(!item)return;item.qty+=delta;if(item.qty<=0)cart=cart.filter(c=>c.id!==id);updateCart()}
+  function updateCart(){document.getElementById("cartCount").textContent=cart.reduce((s,c)=>s+c.qty,0);const
+  subtotal=cart.reduce((s,c)=>s+c.price*c.qty,0);const
+  total=subtotal+(subtotal>0?CONFIG.deliveryFee:0);document.getElementById("subtotal").textContent=`${subtotal}
+  DA`;document.getElementById("delivery").textContent=`${CONFIG.deliveryFee} DA`;document.getElementById("total").textContent=`${total} DA`;const
+  body=document.getElementById("cartBody"),foot=document.getElementById("cartFoot");if(cart.length===0){body.innerHTML=`<div class="cart-empty"><div
+  class="cart-empty-emoji">🍔</div><p>Votre panier est vide.</p></div>`;foot.classList.add("hidden")}else{body.innerHTML=cart.map(item=>`<div
+  class="cart-item"><div class="cart-item-img"><span>${item.emoji}</span></div><div class="cart-item-info"><div
+  class="cart-item-name">${item.name}</div><div class="cart-item-price">${item.price*item.qty} DA</div></div><div class="qty"><button
+  onclick="changeQty(${item.id},-1)">−</button><span>${item.qty}</span><button
+  onclick="changeQty(${item.id},1)">+</button></div></div>`).join("");foot.classList.remove("hidden")}}
+  function openCart(){document.getElementById("cartDrawer").classList.add("open");document.getElementById("cartOverlay").classList.add("open");document.body
+  .style.overflow="hidden"}
+  function closeCart(){document.getElementById("cartDrawer").classList.remove("open");document.getElementById("cartOverlay").classList.remove("open");docume
+  nt.body.style.overflow=""}
+  function goToStep(step){document.querySelectorAll(".checkout-step").forEach(s=>s.classList.remove("active"));document.getElementById(`step-${step}`).class
+  List.add("active");document.getElementById("cartTitle").textContent=step==="cart"?"Votre panier":step==="form"?"Livraison":"Confirmé"}
+  function goToCheckout(){const subtotal=cart.reduce((s,c)=>s+c.price*c.qty,0);if(subtotal<CONFIG.minOrder){showToast(`Minimum: ${CONFIG.minOrder}
+  DA`);return}goToStep("form")}
+  document.querySelectorAll('.pay-opt input').forEach(input=>{input.addEventListener('change',()=>{document.querySelectorAll('.pay-opt').forEach(opt=>opt.cl
+  assList.remove('selected'));input.closest('.pay-opt').classList.add('selected')})});
+  const SHEETS_URL="https://script.google.com/macros/s/AKfycbxtnn9q70zy1dxZoyIfIpU29m-F0gL3WeiEYtEnVFK9pDeudcALATONROxmp85WSxcrsw/exec";
+  function submitOrder(e){e.preventDefault();const data=new FormData(e.target);const subtotal=cart.reduce((s,c)=>s+c.price*c.qty,0);const
+  total=subtotal+CONFIG.deliveryFee;const itemsList=cart.map(c=>`${c.qty}× ${c.name}`).join(" | ");const
+  payload={name:data.get("name"),phone:data.get("phone"),address:data.get("address"),commune:data.get("commune"),wilaya:data.get("wilaya"),items:itemsList,s
+  ubtotal:subtotal,delivery:CONFIG.deliveryFee,total:total,payment:data.get("payment")==="cash"?"Espèces":"Carte",notes:data.get("notes")||""};const
+  blob=new Blob([JSON.stringify(payload)],{type:"text/plain;charset=utf-8"});navigator.sendBeacon?
+  navigator.sendBeacon(SHEETS_URL,blob):fetch(SHEETS_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(payload)}).catch(()=>{});goToStep("success")}
+  function resetOrder(){cart=[];updateCart();document.getElementById("checkoutForm").reset();goToStep("cart");closeCart()}
+  let toastTimer;function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastTimer);toastTi
+  mer=setTimeout(()=>t.classList.remove("show"),1800)}
+  function populateWilayas(){Object.keys(WILAYAS).forEach(w=>{const
+  opt=document.createElement("option");opt.value=w;opt.textContent=w;document.getElementById("wilayaSelect").appendChild(opt)})}
+  function updateCommunes(){const wilaya=document.getElementById("wilayaSelect").value;const
+  select=document.getElementById("communeSelect");if(!wilaya||!WILAYAS[wilaya]){select.innerHTML='<option>Sélectionnez une wilaya...</option>';select.disabl
+  ed=true;return}select.disabled=false;select.innerHTML='<option>Choisir...</option>'+WILAYAS[wilaya].map(c=>`<option>${c}</option>`).join("")}
+  renderCategories();renderMenu();updateCart();populateWilayas();
+  </script></body></html>
